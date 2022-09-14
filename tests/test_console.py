@@ -68,9 +68,7 @@ class TestConsole(unittest.TestCase):
     def test_quit(self):
         """Test quit command"""
         with patch('sys.stdout', new=StringIO()) as f:
-            print("XXXXXXXXXXXXXXXXXX", f.getvalue())
             self.consol.onecmd("quit")
-            print("XXXXXXXXXXXXXXXXXX", f.getvalue())
             self.assertEqual('', f.getvalue())
 
     def test_create(self):
@@ -134,8 +132,6 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("all qwerty")
             self.assertEqual("** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            self.consol.onecmd('create State')
-        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
             self.assertNotEqual("[]\n", f.getvalue())
 
@@ -178,19 +174,19 @@ class TestConsole(unittest.TestCase):
                              f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("User.destroy(jd8jjrn87366)")
-            self.assertNotEqual(
-                "** no instance found **\n", f.getvalue())
+            self.assertNotEqual("** no instance found **\n",
+                                f.getvalue())
 
     def test_update(self):
         """Test alternate destroy command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("okdnhxg.update()")
             self.assertNotEqual("** class doesn't exist **",
-                                   f.getvalue())
+                                f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("User.update(7jdj87yndki)")
             self.assertNotEqual("** no instance found **",
-                             f.getvalue())
+                                f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             obj = f.getvalue()
@@ -202,7 +198,7 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("User.update(" + my_id + ", name)")
             self.assertNotEqual("** value missing **\n",
-                             f.getvalue())
+                                f.getvalue())
 
 if __name__ == "__main__":
     unittest.main()
